@@ -1,36 +1,41 @@
-import Counter from "../components/Counter";
-import logo from "../assets/logo.svg";
+/* eslint-disable react/forbid-prop-types */
+import PropTypes from "prop-types";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { userContext } from "../hooks/userContext";
 
-export default function Home() {
+export default function Home({ socket }) {
+  const navigate = useNavigate();
+  const { userName, setUserName } = useContext(userContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    socket.emit("newUser", { userName, socketID: socket.id });
+    socket.emit("join", { userName });
+    navigate("/chat");
+  };
   return (
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>Hello Vite + React !</p>
-
-      <Counter />
-
-      <p>
-        Edit <code>App.jsx</code> and save to test HMR updates.
-      </p>
-      <p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        {" | "}
-        <a
-          className="App-link"
-          href="https://vitejs.dev/guide/features.html"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Vite Docs
-        </a>
-      </p>
-    </header>
+    <form className="home__container">
+      <h2 className="home__header">Sign in to the chat room</h2>
+      <label htmlFor="username">Username</label>
+      <input
+        type="text"
+        name="username"
+        id="username"
+        className="username__input"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+      />
+      <button type="button" className="home__cta" onClick={handleSubmit}>
+        SIGN IN
+      </button>
+    </form>
   );
 }
+
+Home.propTypes = {
+  socket: PropTypes.shape({
+    emit: PropTypes.func,
+    id: PropTypes.string,
+  }).isRequired,
+};
