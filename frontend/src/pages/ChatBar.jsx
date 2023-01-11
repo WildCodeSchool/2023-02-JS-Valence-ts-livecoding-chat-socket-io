@@ -1,13 +1,6 @@
-import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-function ChatBar({ socket }) {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    socket.on("newUserResponse", (user) => setUsers(user));
-  }, [socket, users]);
-
+function ChatBar() {
   return (
     <div className="chat__sidebar">
       <h2>Open Chat</h2>
@@ -15,22 +8,13 @@ function ChatBar({ socket }) {
       <div>
         <h4 className="chat__header">ACTIVE USERS</h4>
         <div className="chat__users">
-          {users.map((user) => (
-            <p key={user.socketID}>
-              {user.socketID === socket.id ? "You" : user.userName}
-            </p>
+          {Array.from([1, 2, 3, 4], (e) => (
+            <p>User {e}</p>
           ))}
         </div>
       </div>
     </div>
   );
 }
-
-ChatBar.propTypes = {
-  socket: PropTypes.shape({
-    on: PropTypes.func,
-    id: PropTypes.string,
-  }).isRequired,
-};
 
 export default ChatBar;

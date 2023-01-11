@@ -1,17 +1,13 @@
-/* eslint-disable react/forbid-prop-types */
-import PropTypes from "prop-types";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { userContext } from "../hooks/userContext";
 
-export default function Home({ socket }) {
+export default function Home() {
   const navigate = useNavigate();
   const { userName, setUserName } = useContext(userContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit("newUser", { userName, socketID: socket.id });
-    socket.emit("join", { userName });
     navigate("/chat");
   };
   return (
@@ -32,10 +28,3 @@ export default function Home({ socket }) {
     </form>
   );
 }
-
-Home.propTypes = {
-  socket: PropTypes.shape({
-    emit: PropTypes.func,
-    id: PropTypes.string,
-  }).isRequired,
-};
