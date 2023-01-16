@@ -4,7 +4,7 @@ Le but de ce workshop est de vous présentez comment utiliser la librairie [sock
 
 Il sera en plusieurs étapes :
 
-## Par le formateur en live coding :
+## Par le formateur en live coding
 
 ### 1: Initialisation de socket.io coté backend
 
@@ -14,9 +14,9 @@ Il sera en plusieurs étapes :
 
 ### 4: Démonstration de l'envoie des premiers messages entre utilisateurs
 
-## Exercice à faire en mode workshop : 
+## Exercice à faire en mode workshop
 
-### 5: Affichage de la liste des utilisateurs actuellement connecté au chat.
+### 5: Affichage de la liste des utilisateurs actuellement connecté au chat
 
 ### 6: Actualisation de la liste lorsqu'un utilisateur se déconnecte et envoie d'un message dans le chat
 
@@ -24,7 +24,7 @@ Il sera en plusieurs étapes :
 
 ### 8: Afficher un message aux autres utilisateurs lorsqu'un nouvel utilisateur se connecte (lien avec étape 8)
 
-### 9: BONUS : Envoyer un message en appuyant sur la touche "Entré" du clavier et faire en sorte que lorsque on arrive à beaucoup de message, le viewport autoscroll vers le dernier message.
+### 9: BONUS : Envoyer un message en appuyant sur la touche "Entré" du clavier et faire en sorte que lorsque on arrive à beaucoup de message, le viewport autoscroll vers le dernier message
 
 ### 10: BONUS DE LA MORT : implémenter la fonctionnalité "userName est en train d'écrire" qui s'affiche UNIQUEMENT si l'utilisateur est en train d'écrire
 
@@ -37,24 +37,31 @@ Il sera en plusieurs étapes :
 - Run command `npm run setup`
 - _NB: To launch the backend server, you'll need an environment file with database credentials. You'll find a template one in `backend/.env.sample`_
 
-### Available Commands
+### Etape 5
 
-- `setup` : Initialization of frontend and backend, as well as all toolings
-- `migrate` : Run the database migration script
-- `dev` : Starts both servers (frontend + backend) in one terminal
-- `dev-front` : Starts the React frontend server
-- `dev-back` : Starts the Express backend server
-- `lint` : Runs validation tools, and refuses unclean code (will be executed on every _commit_)
-- `fix` : Fixes linter errors (run it if `lint` growls on your code !)
+Puisque je peux avoir plusieurs utilisateurs connectés en même temps sur le chat, je vais utiliser
+un tableau d'user.
 
-## FAQ
+Je vais gérer ça coté backend et le renvoyer au front.
 
-### Tools
+Ainsi la logique sera qu'une fois qu'un utilisateur se connecte on l'ajoute au tableau d'utilisateur
+existant et on renvoie l'information coté front.
 
-- _Concurrently_ : Allows for several commands to run concurrently in the same CLI
-- _Husky_ : Allows to execute specific commands that trigger on _git_ events
-- _Vite_ : Alternative to _Create-React-App_, packaging less tools for a more fluid experience
-- _ESLint_ : "Quality of code" tool, ensures chosen rules will be enforced
-- _Prettier_ : "Quality of code" tool as well, focuses on the styleguide
-- _Airbnb Standard_ : One of the most known "standards", even though it's not officially linked to ES/JS
-- _Nodemon_ : Allows to restart the server everytime a .js file is udated
+NE REGARDEZ PAS LE CODE SI VOUS VOULEZ LE FAIRE TOUT SEUL
+
+<details>
+<summary> Solution </summary>
+<br>
+``js
+  // je stock mes users dans un tableau
+  let users = [];
+
+    // pour avoir la liste des utilisateurs connectés
+
+socket.on("newUser", (data) => {
+users.push(data); // j'ajoute l'utilisateur à mon tableau avec les data reçues du front
+io.emit("newUserResponse", users);
+});
+``
+
+</details>
