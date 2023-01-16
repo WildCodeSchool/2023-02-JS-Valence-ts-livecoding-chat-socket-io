@@ -7,7 +7,7 @@ Avant de vous y plonger on oublie pas :
 - In VSCode, install plugins **Prettier - Code formatter** and **ESLint** and configure them
 - Clone this repo, enter it
 - Run command `npm run setup`
-- _NB: Not need to db for this one but feel free to persit message in the DB in the future`_
+- _NB: We don't need a db for this one but feel free to persit message in the DB in the future`_
 
 Le but de ce workshop est de vous présentez comment utiliser la librairie [socket.io](https://socket.io/) afin de réaliser un chat en temps réel style messenger/WhatsApp.
 
