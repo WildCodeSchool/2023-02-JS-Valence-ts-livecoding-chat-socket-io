@@ -12,13 +12,13 @@ function ChatPage({ socket }) {
 
   useEffect(() => {
     socket.on("welcome", (message) => {
-      setMessages([...messages, message]);
+      setMessages((old) => [...old, message]);
     });
 
     socket.on("messageResponse", (message) => {
-      setMessages([...messages, message]);
+      setMessages((old) => [...old, message]);
     });
-  }, [socket, messages]);
+  }, [socket]);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: "smooth" });
